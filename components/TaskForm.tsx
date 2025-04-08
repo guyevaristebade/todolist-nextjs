@@ -28,7 +28,7 @@ import { useCreateTask } from "@/hooks/tasks";
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
-  priority: z.enum(["low", "medium", "high"]).default("low"),
+  priority: z.enum(["low", "medium", "high"]),
 });
 
 type TaskFormValues = z.infer<typeof taskSchema>;
@@ -39,7 +39,7 @@ const TaskForm = () => {
     defaultValues: {
       title: "",
       description: "",
-      priority: "medium",
+      priority: "low",
     },
   });
   const { mutate: createTask } = useCreateTask();
