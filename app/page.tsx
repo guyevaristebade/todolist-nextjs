@@ -5,7 +5,7 @@ import TaskForm from "@/components/TaskForm";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
-const HomePage = () => {
+const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
@@ -23,4 +23,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

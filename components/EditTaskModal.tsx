@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -19,27 +18,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { TaskData } from "@/types/tasks";
 
 interface EditTaskModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (
-    id: string,
-    updatedTask: { title: string; description: string; priority: string }
-  ) => void;
   task: {
     id: string;
     title: string;
     description: string;
     priority: "low" | "medium" | "high";
   };
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (id: string, updatedTask: TaskData) => void;
 }
 
 const EditTaskModal = ({
+  task,
   isOpen,
   onClose,
   onSave,
-  task,
 }: EditTaskModalProps) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);

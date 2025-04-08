@@ -32,6 +32,7 @@ const TaskItem = ({
     >
       <div className="flex items-center gap-4">
         <Checkbox
+          className="cursor-pointer w-6"
           id={`completed_task_${id}`}
           checked={completed}
           onCheckedChange={() => onComplete && onComplete(id)}

@@ -23,11 +23,12 @@ import {
 } from "./ui/select";
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
+import { useCreateTask } from "@/hooks/tasks";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  description: z.string().optional(),
-  priority: z.enum(["low", "medium", "high"]).default("medium"),
+  description: z.string().min(1, "Description is required"),
+  priority: z.enum(["low", "medium", "high"]).default("low"),
 });
 
 type TaskFormValues = z.infer<typeof taskSchema>;
@@ -41,14 +42,18 @@ const TaskForm = () => {
       priority: "medium",
     },
   });
+  const { mutate: createTask } = useCreateTask();
 
   const onSubmit = async (values: TaskFormValues) => {
-    await fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify(values),
+    createTask(values, {
+      onSuccess: () => {
+        form.reset();
+        toast("Task created successfully");
+      },
+      onError: () => {
+        toast.error("Failed to create task");
+      },
     });
-    form.reset();
-    toast("Event has been created");
   };
 
   return (

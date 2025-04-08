@@ -1,109 +1,138 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
-
-  if (!id) {
-    return NextResponse.json({ error: "ID is required." }, { status: 400 });
-  }
-
-  const task = await prisma.task.findUnique({
-    where: {
-      id,
-    },
-  });
-
-  if (!task) {
-    return NextResponse.json({ error: "Task not found." }, { status: 404 });
-  }
-
-  return NextResponse.json(task);
-}
-
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const params = await context.params;
+  const id = params.id;
+
+  console.log("ID => ", id);
 
   if (!id) {
-    return NextResponse.json({ error: "ID is required." }, { status: 400 });
+    return NextResponse.json(
+      { message: "Task ID is required " },
+      { status: 400 }
+    );
   }
 
-  const { title, description, priority } = await req.json();
-
+  const { title, description, priority } = await request.json();
   if (!title || !description || !priority) {
     return NextResponse.json(
-      { error: "Title, description, and priority are required." },
+      { message: "Title, description, and priority are required" },
       { status: 400 }
     );
   }
 
   const task = await prisma.task.update({
-    where: {
-      id,
-    },
-    data: {
-      title,
-      description,
-      priority,
-    },
+    where: { id },
+    data: { title, description, priority },
   });
 
-  return NextResponse.json(task);
-}
-
-// update completed
-export async function PATCH(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
-
-  if (!id) {
-    return NextResponse.json({ error: "ID is required." }, { status: 400 });
-  }
-
-  const { completed } = await req.json();
-
-  if (completed === undefined) {
+  // failed to update
+  if (!task) {
     return NextResponse.json(
-      { error: "Completed is required." },
-      { status: 400 }
+      { message: "Failed to update task" },
+      { status: 500 }
     );
   }
-
-  const task = await prisma.task.update({
-    where: {
-      id,
-    },
-    data: {
-      completed,
-    },
-  });
 
   return NextResponse.json(task);
 }
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const params = await context.params;
+  const id = params.id;
 
   if (!id) {
-    return NextResponse.json({ error: "ID is required." }, { status: 400 });
+    return NextResponse.json(
+      { message: "Task ID is required " },
+      { status: 400 }
+    );
   }
 
   const task = await prisma.task.delete({
-    where: {
-      id,
-    },
+    where: { id },
   });
+
+  // failed to delete
+  if (!task) {
+    return NextResponse.json(
+      { message: "Failed to delete task" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(task);
+}
+
+export async function PATCH(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const params = await context.params;
+  const id = params.id;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "Task ID is required " },
+      { status: 400 }
+    );
+  }
+
+  const { completed } = await request.json();
+  if (completed === undefined) {
+    return NextResponse.json(
+      { message: "Completed status is required" },
+      { status: 400 }
+    );
+  }
+
+  const task = await prisma.task.update({
+    where: { id },
+    data: { completed },
+  });
+
+  // failed to update
+  if (!task) {
+    return NextResponse.json(
+      { message: "Failed to update task" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(task);
+}
+
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const params = await context.params;
+  const id = params.id;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "Task ID is required " },
+      { status: 400 }
+    );
+  }
+
+  const task = await prisma.task.findUnique({
+    where: { id },
+  });
+
+  // failed to get
+  if (!task) {
+    return NextResponse.json(
+      { message: "Failed to get task" },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json(task);
 }
