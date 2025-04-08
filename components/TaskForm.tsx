@@ -23,7 +23,7 @@ import {
 } from "./ui/select";
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
-import { useCreateTask } from "@/hooks/tasks";
+import { useCreateTask } from "@/hooks/use-tasks";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),

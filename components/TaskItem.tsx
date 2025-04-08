@@ -4,6 +4,7 @@ import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { Edit, TrashIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TaskItemProps {
   id: string;
@@ -30,9 +31,9 @@ const TaskItem = ({
 
   return (
     <Card
-      className={`w-full p-4 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 ${
+      className={`w-full p-4 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 ${cn(
         completed ? "opacity-50" : ""
-      }`}
+      )}`}
     >
       <div className="flex flex-col gap-3">
         {/* Section supérieure: checkbox, titre et badge de priorité */}
@@ -49,13 +50,13 @@ const TaskItem = ({
             </div>
           </div>
           <span
-            className={`whitespace-nowrap text-sm px-2 py-1 rounded ${
+            className={`whitespace-nowrap text-sm px-2 py-1 rounded ${cn(
               priority === "high"
                 ? "bg-red-100 text-red-600"
                 : priority === "medium"
                 ? "bg-yellow-100 text-yellow-600"
                 : "bg-green-100 text-green-600"
-            }`}
+            )}`}
           >
             {priority}
           </span>
@@ -64,9 +65,9 @@ const TaskItem = ({
         {/* Description avec possibilité de voir plus */}
         <div className="pl-8">
           <p
-            className={`text-sm text-gray-500 break-words ${
+            className={`text-sm text-gray-500 break-words ${cn(
               isExpanded ? "" : "line-clamp-2"
-            }`}
+            )}`}
           >
             {description}
           </p>

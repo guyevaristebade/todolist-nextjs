@@ -44,7 +44,6 @@ const EditTaskModal = ({
 
   const handleSave = () => {
     onSave(task.id, { title, description, priority });
-    // Reset the form fields
     setTitle("");
     setDescription("");
     setPriority("low");
