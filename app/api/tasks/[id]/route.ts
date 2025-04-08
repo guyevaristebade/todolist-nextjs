@@ -85,6 +85,7 @@ export async function PATCH(
   }
 
   const { completed } = await request.json();
+  console.log("Completed => ", completed);
   if (completed === undefined) {
     return NextResponse.json(
       { message: "Completed status is required" },

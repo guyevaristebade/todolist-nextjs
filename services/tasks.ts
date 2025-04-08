@@ -17,7 +17,7 @@ export const deleteTask = async (id: string) => {
 };
 
 export const toggleTaskCompletion = async (id: string, completed: boolean) => {
-  const response = await axiosInstance.patch(`/tasks/${id}`, completed);
+  const response = await axiosInstance.patch(`/tasks/${id}`, { completed });
   return response.data;
 };
 

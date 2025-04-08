@@ -51,8 +51,8 @@ const TaskList = () => {
           toast.success("Task updated successfully");
         },
         onError: (error) => {
-          toast.error("Failed to update task");
-          console.error("Error updating task:", error);
+          toast.error("Failed to update task => " + error.message);
+          console.error("Error updating task:", error.message);
         },
       }
     );

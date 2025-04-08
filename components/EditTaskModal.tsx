@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -44,8 +44,20 @@ const EditTaskModal = ({
 
   const handleSave = () => {
     onSave(task.id, { title, description, priority });
+    // Reset the form fields
+    setTitle("");
+    setDescription("");
+    setPriority("low");
     onClose();
   };
+
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+      setDescription(task.description);
+      setPriority(task.priority);
+    }
+  }, [task]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
