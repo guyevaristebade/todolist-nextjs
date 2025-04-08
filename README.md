@@ -1,5 +1,7 @@
 # TaskiFy - Application de Gestion de Tâches
 
+[Visitez le site TaskiFy](https://todolist-nextjs-nine-phi.vercel.app)
+
 <img alt="Next.js" src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&amp;logo=next.js&amp;logoColor=white">
 <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=black">
 <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typescript&amp;logoColor=white">
